@@ -4,7 +4,7 @@ def read_even_lines(filepath, starting_line):
     try:
         with open(filepath, 'r') as file:
             for index, line in enumerate(file):
-                if (index + 1) % 2 == 0:
+                if (index + 1) % 2 == 0 and (index + 1) >= starting_line:
                     parts = line.strip().split('|')
                     if len(parts) > 4:
                         key = parts[1].strip()
@@ -16,16 +16,16 @@ def read_even_lines(filepath, starting_line):
                         print(f"Warning: Skipping line due to incorrect format: '{line.strip()}'")
     except FileNotFoundError:
         print(f"Error: File not found at {filepath}")
-        return []
+        return None
     return even_lines_data
 
 # Example usage:
-file_path = 'your_structured_file.txt'  # Replace with the actual path to your file
-data_from_even_lines = read_even_lines(file_path)
+file_path = 'test.txt'  # Replace with the actual path to your file
+data_dictionary = read_even_lines(file_path, 4)
 
-if data_from_even_lines:
-    print("Data from even-numbered lines:")
-    for item in data_from_even_lines:
-        print(item)
+if data_dictionary:
+    print("Data stored in a dictionary:")
+    for key, values in data_dictionary.items():
+        print(f"Key: {key}, Values: {values}")
 else:
-    print("No even-numbered lines found or file could not be read.")
+    print("No data read or file could not be processed.")
